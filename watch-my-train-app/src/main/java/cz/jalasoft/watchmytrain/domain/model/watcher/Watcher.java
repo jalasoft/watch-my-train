@@ -13,12 +13,12 @@ public class Watcher {
 
     private WatcherId id;
     private String name;
-    private Collection<TrainId> watchedTrains;
+    private WatchList watchList;
 
-    public Watcher(WatcherId id, String name, Collection<TrainId> watchedTrains) {
+    public Watcher(WatcherId id, String name, WatchList watchList) {
         this.id = id;
         this.name = name;
-        this.watchedTrains = watchedTrains;
+        this.watchList = watchList;
     }
 
     public void rename(String name) {
@@ -35,12 +35,15 @@ public class Watcher {
         this.name = name;
     }
 
+    public WatcherId id() {
+        return id;
+    }
+
     public String name() {
         return name;
     }
 
-    public Iterable<TrainId> trains() {
-        return new ArrayList<>(watchedTrains);
+    public WatchList list() {
+        return watchList;
     }
-
 }

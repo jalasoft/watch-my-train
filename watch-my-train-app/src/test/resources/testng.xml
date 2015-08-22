@@ -1,0 +1,7 @@
+<suite name="wacher">
+    <test name="retrieving watcher">
+        <classes>
+            <class name="cz.jalasoft.watchmytrain.WatcherTest"/>
+        </classes>
+    </test>
+</suite>
