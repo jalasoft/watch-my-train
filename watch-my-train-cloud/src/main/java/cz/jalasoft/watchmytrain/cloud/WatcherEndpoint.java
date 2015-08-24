@@ -24,8 +24,15 @@ public class WatcherEndpoint {
         LOGGER.debug("WatcherEndpoint initialized");
     }
 
-    @RequestMapping(path = "new", method = RequestMethod.POST)
-    public void newWatcher(@RequestBody String name) {
-        LOGGER.debug("Prisla message");
+    @RequestMapping(path = "/create", method = RequestMethod.POST)
+    public Watcher createWatcher(@RequestBody Watcher watcher) {
+        LOGGER.debug("A new watcher is being created: {}", watcher.getName());
+
+        return null;
+    }
+
+    @RequestMapping(path = "/get", method = RequestMethod.GET)
+    public Watcher getOne() {
+        return new Watcher("Honza");
     }
 }
