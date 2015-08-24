@@ -6,8 +6,9 @@
 
     <groupId>cz.jalasoft.watchmytrain</groupId>
     <artifactId>watch-my-train</artifactId>
-    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
 
     <modules>
         <module>watch-my-train-app</module>
