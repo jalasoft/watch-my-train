@@ -1,12 +1,12 @@
 package cz.jalasoft.watchmytrain.cloud;
 
-import java.io.Serializable;
+import org.springframework.hateoas.ResourceSupport;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 8/24/15.
  */
-public class Watcher implements Serializable {
+public class Watcher extends ResourceSupport {
 
     private String name;
 
