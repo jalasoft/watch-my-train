@@ -18,6 +18,10 @@ public class Watcher extends ResourceSupport {
         this.name = name;
     }
 
+    public Watcher(Watcher watcher) {
+        this.name = watcher.getName();
+    }
+
     public String getName() {
         return name;
     }

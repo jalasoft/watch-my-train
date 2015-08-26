@@ -12,4 +12,4 @@ BODY="{
 echo "Body prepared:"
 echo "$BODY"
 
-curl --data "$BODY" --verbose --header "Content-Type:application/json" 0.0.0.0:8888/watcher/create/
+curl --request POST --data "$BODY" --verbose --header "Content-Type:application/json" 0.0.0.0:8888/watcher/
