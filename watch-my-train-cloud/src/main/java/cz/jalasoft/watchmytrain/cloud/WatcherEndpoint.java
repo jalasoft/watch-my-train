@@ -7,12 +7,10 @@ import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
@@ -27,14 +25,14 @@ public class WatcherEndpoint {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(WatcherEndpoint.class);
 
-    private final List<Watcher> watchers = new ArrayList<>();
+    private final List<WatcherResource> watchers = new ArrayList<>();
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Watcher> createWatcher(@RequestBody Watcher watcher) {
+    public ResponseEntity<WatcherResource> createWatcher(@RequestBody WatcherResource watcher) {
 
         String name = watcher.getName();
         if (name == null || name.isEmpty()) {
-            throw new InvalidWatcherException("Watcher name must not be null or empty");
+            throw new InvalidWatcherException("WatcherResource name must not be null or empty");
         }
 
         LOGGER.debug("A new watcher is being created: {}", watcher.getName());
@@ -52,11 +50,11 @@ public class WatcherEndpoint {
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(selfLinkBuilder.toUri());
 
-        return new ResponseEntity<Watcher>(watcher, headers, HttpStatus.CREATED);
+        return new ResponseEntity<WatcherResource>(watcher, headers, HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Watchers> allWatchers() {
+    public ResponseEntity<WatcherCollectionResource> allWatchers() {
 
         ControllerLinkBuilder selfLinkBuilder = ControllerLinkBuilder.linkTo(WatcherEndpoint.class);
 
@@ -64,12 +62,37 @@ public class WatcherEndpoint {
         headers.setLocation(selfLinkBuilder.toUri());
 
         if (watchers.isEmpty()) {
-            return new ResponseEntity<Watchers>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<WatcherCollectionResource>(HttpStatus.NO_CONTENT);
         }
 
-        Watchers allWatchers = new Watchers(watchers);
+        WatcherCollectionResource allWatchers = new WatcherCollectionResource(watchers);
         allWatchers.add(selfLinkBuilder.withSelfRel());
 
-        return new ResponseEntity<Watchers>(allWatchers, headers, HttpStatus.ACCEPTED);
+        return new ResponseEntity<WatcherCollectionResource>(allWatchers, headers, HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value= "/{watcherName}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteWatcher(@PathVariable String watcherName) {
+
+        if (watcherName == null || watcherName.isEmpty()) {
+            throw new InvalidWatcherException("WatcherResource name must not be null or empty.");
+        }
+
+        boolean removed = false;
+        Iterator<WatcherResource> it = watchers.iterator();
+        while(it.hasNext()) {
+            WatcherResource w = it.next();
+
+            if (w.getName().equals(watcherName)) {
+                it.remove();
+                removed = true;
+            }
+        }
+
+        if (!removed) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<Void>(HttpStatus.FOUND);
     }
 }

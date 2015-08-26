@@ -9,15 +9,15 @@ import java.util.List;
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 8/26/15.
  */
-public class Watchers extends ResourceSupport {
+public class WatcherCollectionResource extends ResourceSupport {
 
-    private List<Watcher> watchers;
+    private List<WatcherResource> watchers;
 
-    public Watchers(List<Watcher> watchers) {
+    public WatcherCollectionResource(List<WatcherResource> watchers) {
         this.watchers = new ArrayList<>(watchers);
     }
 
-    public List<Watcher> getWatchers() {
+    public List<WatcherResource> getWatchers() {
         return watchers;
     }
 }

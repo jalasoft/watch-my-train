@@ -6,19 +6,19 @@ import org.springframework.hateoas.ResourceSupport;
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 8/24/15.
  */
-public class Watcher extends ResourceSupport {
+public class WatcherResource extends ResourceSupport {
 
     private String name;
 
-    public Watcher() {
+    public WatcherResource() {
         name="";
     }
 
-    public Watcher(String name) {
+    public WatcherResource(String name) {
         this.name = name;
     }
 
-    public Watcher(Watcher watcher) {
+    public WatcherResource(WatcherResource watcher) {
         this.name = watcher.getName();
     }
 
