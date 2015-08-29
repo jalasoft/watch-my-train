@@ -1,4 +1,4 @@
-package cz.jalasoft.watchmytrain.domain.model.train;
+package cz.jalasoft.trainwatch.domain.model.train;
 
 import java.util.Optional;
 

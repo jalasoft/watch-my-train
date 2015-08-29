@@ -1,9 +1,4 @@
-package cz.jalasoft.watchmytrain.domain.model.watcher;
-
-import cz.jalasoft.watchmytrain.domain.model.train.TrainId;
-
-import java.util.ArrayList;
-import java.util.Collection;
+package cz.jalasoft.trainwatch.domain.model.watcher;
 
 /**
  * @author Honza Lastovicka

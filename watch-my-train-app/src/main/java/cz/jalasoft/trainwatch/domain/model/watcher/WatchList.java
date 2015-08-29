@@ -1,7 +1,6 @@
-package cz.jalasoft.watchmytrain.domain.model.watcher;
+package cz.jalasoft.trainwatch.domain.model.watcher;
 
-import cz.jalasoft.watchmytrain.domain.model.train.Train;
-import cz.jalasoft.watchmytrain.domain.model.train.TrainId;
+import cz.jalasoft.trainwatch.domain.model.train.TrainId;
 
 import java.util.Collection;
 import java.util.function.Consumer;

@@ -1,4 +1,4 @@
-package cz.jalasoft.watchmytrain.cloud;
+package cz.jalasoft.trainwatch.resources;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

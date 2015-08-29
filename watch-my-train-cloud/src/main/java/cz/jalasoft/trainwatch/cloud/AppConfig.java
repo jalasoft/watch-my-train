@@ -1,4 +1,4 @@
-package cz.jalasoft.watchmytrain.cloud.config;
+package cz.jalasoft.trainwatch.cloud;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

@@ -16,7 +16,7 @@
      <init-param>
          <param-name>contextConfigLocation</param-name>
          <param-value>
-             cz.jalasoft.watchmytrain.cloud.config.AppConfig
+             cz.jalasoft.trainwatch.cloud.AppConfig
          </param-value>
      </init-param>
 

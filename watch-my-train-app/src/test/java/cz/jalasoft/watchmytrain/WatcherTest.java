@@ -1,8 +1,7 @@
 package cz.jalasoft.watchmytrain;
 
-import cz.jalasoft.watchmytrain.domain.model.train.TrainId;
-import cz.jalasoft.watchmytrain.domain.model.watcher.Watcher;
-import cz.jalasoft.watchmytrain.domain.model.watcher.WatcherRepository;
+import cz.jalasoft.trainwatch.domain.model.watcher.Watcher;
+import cz.jalasoft.trainwatch.domain.model.watcher.WatcherRepository;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

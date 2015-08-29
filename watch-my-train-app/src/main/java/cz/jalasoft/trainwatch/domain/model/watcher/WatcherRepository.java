@@ -1,4 +1,4 @@
-package cz.jalasoft.watchmytrain.domain.model.watcher;
+package cz.jalasoft.trainwatch.domain.model.watcher;
 
 /**
  * @author Honza Lastovicka
