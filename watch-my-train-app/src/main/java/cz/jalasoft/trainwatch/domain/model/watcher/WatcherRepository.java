@@ -6,8 +6,6 @@ package cz.jalasoft.trainwatch.domain.model.watcher;
  */
 public interface WatcherRepository {
 
-    Watcher newWatcher(String name);
-
     void addWatcher(Watcher watcher);
 
     void removeWatcher(WatcherId watcherId);

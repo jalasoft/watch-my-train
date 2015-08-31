@@ -11,6 +11,10 @@ import java.util.function.Consumer;
  */
 public class WatchList {
 
+    public static WatchList empty() {
+        return new WatchList();
+    }
+
     private Collection<TrainId> watchedTrains;
 
     private Collection<TrainId> trainsToWatch;
