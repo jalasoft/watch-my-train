@@ -1,4 +1,4 @@
-package cz.jalasoft.trainwatch.domain.model.watcher;
+package cz.jalasoft.trainwatch.domain.model.observer;
 
 import cz.jalasoft.trainwatch.domain.model.train.TrainId;
 

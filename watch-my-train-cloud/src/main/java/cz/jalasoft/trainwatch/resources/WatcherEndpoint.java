@@ -1,7 +1,7 @@
 package cz.jalasoft.trainwatch.resources;
 
-import cz.jalasoft.trainwatch.application.TrainWatchApplicationService;
-import cz.jalasoft.trainwatch.domain.model.watcher.Watcher;
+import cz.jalasoft.trainwatch.application.TrainObserverApplicationService;
+import cz.jalasoft.trainwatch.domain.model.observer.TrainObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.Link;
@@ -11,9 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
@@ -27,7 +25,7 @@ public class WatcherEndpoint {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(WatcherEndpoint.class);
 
-    private TrainWatchApplicationService watcherService;
+    private TrainObserverApplicationService watcherService;
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<WatcherResource> createWatcher(@RequestBody WatcherResource watcher) {
@@ -44,7 +42,7 @@ public class WatcherEndpoint {
         Link selfLink = selfLinkBuilder.withSelfRel();
         watcher.add(selfLink);
 
-        Watcher newWatcher = watcherService.registerWatcher(name);
+        TrainObserver newWatcher = watcherService.registerWatcher(name);
 
 
         Link allLink = linkTo(methodOn(WatcherEndpoint.class).allWatchers()).withRel("all");

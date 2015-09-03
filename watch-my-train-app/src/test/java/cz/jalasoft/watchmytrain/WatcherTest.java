@@ -1,7 +1,7 @@
 package cz.jalasoft.watchmytrain;
 
-import cz.jalasoft.trainwatch.domain.model.watcher.Watcher;
-import cz.jalasoft.trainwatch.domain.model.watcher.WatcherRepository;
+import cz.jalasoft.trainwatch.domain.model.observer.TrainObserver;
+import cz.jalasoft.trainwatch.domain.model.observer.TrainObserverRepository;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -12,12 +12,12 @@ import org.testng.annotations.Test;
 @Test(enabled = false)
 public class WatcherTest {
 
-    private WatcherRepository repository;
+    private TrainObserverRepository repository;
 
    // @Test(groups = { "watcher" })
     public void newWatcherIsNotNull() {
 
-        Watcher watcher = repository.newWatcher("Pepa");
+        TrainObserver watcher = repository.newWatcher("Pepa");
         Assert.assertNotNull(watcher);
     }
 
@@ -33,10 +33,10 @@ public class WatcherTest {
 
     //@Test
     public void addsNewWatcherAndRetrievesItByItsName() {
-        Watcher newWatcher = repository.newWatcher("Honzales");
+        TrainObserver newWatcher = repository.newWatcher("Honzales");
         repository.addWatcher(newWatcher);
 
-        Watcher retrievedWatcher = repository.getWatcherByName(newWatcher.name());
+        TrainObserver retrievedWatcher = repository.getWatcherByName(newWatcher.name());
 
         Assert.assertNotNull(retrievedWatcher);
         Assert.assertEquals(newWatcher.id(), retrievedWatcher.id());
@@ -44,7 +44,7 @@ public class WatcherTest {
 
     public void jentak() {
 
-        Watcher watcher = repository.getWatcherByName("Posrat");
+        TrainObserver watcher = repository.getWatcherByName("Posrat");
         //watcher.list().watchTrain();
 
     }
