@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @since 8/25/15.
  */
 @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-public class InvalidWatcherException extends RuntimeException {
+public class InvalidObserverException extends RuntimeException {
 
-    public InvalidWatcherException(String message) {
+    public InvalidObserverException(String message) {
         super(message);
     }
 }

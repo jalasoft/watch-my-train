@@ -2,19 +2,23 @@ package cz.jalasoft.trainwatch.application;
 
 import cz.jalasoft.trainwatch.domain.model.observer.TrainObserver;
 import cz.jalasoft.trainwatch.domain.model.observer.TrainObserverRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.Collection;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 8/29/15.
  */
+@Component("trainObserverService")
 public class TrainObserverApplicationService {
 
+    @Autowired
     private TrainObserverRepository observerRepository;
 
     public TrainObserver registerObserver(String nickname) {
-        if (nickname == null || nickname.isEmpty()) {
-            throw new IllegalArgumentException("Watcher name must not be null or empty.");
-        }
+        checkNickname(nickname);
 
         TrainObserver observer = new TrainObserver(nickname);
         observerRepository.addObserver(observer);
@@ -22,5 +26,20 @@ public class TrainObserverApplicationService {
         return observer;
     }
 
+    public void unregisterObserver(String nickname) {
+        checkNickname(nickname);
+        //TODO
+    }
+
+    private void checkNickname(String nickname) {
+        if (nickname == null || nickname.isEmpty()) {
+            throw new IllegalArgumentException("Nickname of an observer must not be null or empty.");
+        }
+    }
+
+    public Collection<TrainObserver> registeredObservers() {
+        Collection<TrainObserver> observers = observerRepository.allObservers();
+        return observers;
+    }
 
 }

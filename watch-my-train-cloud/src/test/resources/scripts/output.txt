@@ -1,0 +1,5 @@
+Body prepared:
+{
+    "nickname" : "Honzales"
+}
+{"nickname":"Honzales","links":[{"rel":"self","href":"http://0.0.0.0:8888/observer/Honzales"},{"rel":"registered observers","href":"http://0.0.0.0:8888/observer"},{"rel":"unregister","href":"http://0.0.0.0:8888/observer/Honzales"}]}

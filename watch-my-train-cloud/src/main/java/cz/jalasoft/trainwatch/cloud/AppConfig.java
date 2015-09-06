@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"cz.jalasoft.watchmytrain.cloud"})
+@ComponentScan(basePackages = {"cz.jalasoft.trainwatch"})
 public class AppConfig extends WebMvcConfigurerAdapter {
 
 }
