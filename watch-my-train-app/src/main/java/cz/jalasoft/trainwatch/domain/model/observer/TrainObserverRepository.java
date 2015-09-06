@@ -10,5 +10,9 @@ public interface TrainObserverRepository {
 
     void addObserver(TrainObserver observer);
 
+    void removeObserver(TrainObserver observer);
+
+    TrainObserver ofNickname(String nickname);
+
     Collection<TrainObserver> allObservers();
 }

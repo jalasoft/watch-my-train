@@ -14,14 +14,14 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 final class ObserverAssembler {
 
     private final TrainObserver observer;
-    private final ObserverResource resource;
+    private final TrainObserverResource resource;
 
     ObserverAssembler(TrainObserver observer) {
         this.observer = observer;
-        this.resource = new ObserverResource();
+        this.resource = new TrainObserverResource();
     }
 
-    ObserverResource resource() {
+    TrainObserverResource resource() {
         resource.setNickname(observer.nickname());
         return resource;
     }

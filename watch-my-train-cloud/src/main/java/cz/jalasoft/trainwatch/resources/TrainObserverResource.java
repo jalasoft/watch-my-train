@@ -6,17 +6,9 @@ import org.springframework.hateoas.ResourceSupport;
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 8/24/15.
  */
-public class ObserverResource extends ResourceSupport {
+public class TrainObserverResource extends ResourceSupport {
 
     private String nickname;
-
-    public ObserverResource() {
-        nickname="";
-    }
-
-    public ObserverResource(ObserverResource observer) {
-        this.nickname = observer.getNickname();
-    }
 
     public String getNickname() {
         return nickname;
@@ -26,4 +18,7 @@ public class ObserverResource extends ResourceSupport {
         this.nickname = nickname;
     }
 
+    public boolean hasNickname() {
+        return nickname != null && !nickname.trim().isEmpty();
+    }
 }

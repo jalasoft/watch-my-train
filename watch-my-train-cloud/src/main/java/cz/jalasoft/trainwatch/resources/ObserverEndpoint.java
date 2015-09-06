@@ -27,7 +27,7 @@ public class ObserverEndpoint {
     private TrainObserverApplicationService observerService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ObserverResource> registerObserver(@RequestBody ObserverResource resource)  {
+    public ResponseEntity<TrainObserverResource> registerObserver(@RequestBody TrainObserverResource resource)  {
         checkTrainObserver(resource);
 
         String nickname = resource.getNickname();
@@ -36,7 +36,7 @@ public class ObserverEndpoint {
 
         TrainObserver newObserver = observerService.registerObserver(nickname);
 
-        ObserverResource newResource = new ObserverAssembler(newObserver)
+        TrainObserverResource newResource = new ObserverAssembler(newObserver)
                 .withSelfLink()
                 .withRegisteredObserversLink()
                 .withUnregisterObserverLink()
@@ -49,19 +49,19 @@ public class ObserverEndpoint {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Collection<ObserverResource>> registeredObservers() {
+    public ResponseEntity<Collection<TrainObserverResource>> registeredObservers() {
 
         Collection<TrainObserver> observers = observerService.registeredObservers();
 
-        Collection<ObserverResource> resources =
+        if (observers.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        Collection<TrainObserverResource> resources =
                 observers.stream().map(observer ->
                         new ObserverAssembler(observer).withSelfLink().resource()
                                     )
                                     .collect(Collectors.toCollection(ArrayList::new));
-
-        if (resources.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
 
         return new ResponseEntity<>(resources, HttpStatus.ACCEPTED);
     }
@@ -75,16 +75,16 @@ public class ObserverEndpoint {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    private void checkTrainObserver(ObserverResource observer) {
+    private void checkTrainObserver(TrainObserverResource observer) {
         if (observer == null) {
-            throw new InvalidObserverException("Observer of trains must not be null.");
+            throw new InvalidTrainObserverResource("Observer of trains must not be null.");
         }
         checkNickname(observer.getNickname());
     }
 
     private void checkNickname(String nickname) {
         if (nickname == null || nickname.isEmpty()) {
-            throw new InvalidObserverException("Nick name of an observer must not be null or empty.");
+            throw new InvalidTrainObserverResource("Nick name of an observer must not be null or empty.");
         }
     }
 

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Honza Lastovicka (lastovicka@avast.com)
@@ -14,19 +16,35 @@ import java.util.Collection;
 @Component("inMemoryTrainObserversRepository")
 public class InMemoryTrainObserverRepository implements TrainObserverRepository {
 
-    private final Collection<TrainObserver> observers;
+    private final Map<String, TrainObserver> observers;
 
     public InMemoryTrainObserverRepository() {
-        observers = new ArrayList<>();
+        observers = new HashMap<>();
     }
 
     @Override
     public void addObserver(TrainObserver observer) {
-        observers.add(observer);
+        observers.put(observer.nickname(), observer);
     }
 
     @Override
     public Collection<TrainObserver> allObservers() {
-        return new ArrayList<>(observers);
+        return new ArrayList<>(observers.values());
+    }
+
+    @Override
+    public void removeObserver(TrainObserver observer) {
+        observers.remove(observer.nickname());
+    }
+
+    @Override
+    public TrainObserver ofNickname(String nickname) {
+
+        TrainObserver observer = observers.get(nickname);
+
+        if (observer == null) {
+            throw new IllegalArgumentException("Unexpected nickiname " + nickname);
+        }
+        return observer;
     }
 }
