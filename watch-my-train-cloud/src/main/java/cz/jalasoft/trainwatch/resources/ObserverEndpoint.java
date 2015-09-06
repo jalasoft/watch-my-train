@@ -28,11 +28,9 @@ public class ObserverEndpoint {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ObserverResource> registerObserver(@RequestBody ObserverResource resource)  {
-        String nickname = resource.getNickname();
+        checkTrainObserver(resource);
 
-        if (nickname == null || nickname.isEmpty()) {
-            throw new InvalidObserverException("Nickname of an observer must not be null or empty");
-        }
+        String nickname = resource.getNickname();
 
         LOGGER.debug("A new train observer is being created with nickname: {}", nickname);
 
@@ -65,17 +63,29 @@ public class ObserverEndpoint {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<Collection<ObserverResource>>(resources, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(resources, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value= "/{nickname}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> unregisterObserver(@PathVariable String nickname) {
-        if (nickname == null || nickname.isEmpty()) {
-            throw new InvalidObserverException("Nick name of an observer must not be null or empty.");
-        }
+        checkNickname(nickname);
 
         observerService.unregisterObserver(nickname);
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
+    private void checkTrainObserver(ObserverResource observer) {
+        if (observer == null) {
+            throw new InvalidObserverException("Observer of trains must not be null.");
+        }
+        checkNickname(observer.getNickname());
+    }
+
+    private void checkNickname(String nickname) {
+        if (nickname == null || nickname.isEmpty()) {
+            throw new InvalidObserverException("Nick name of an observer must not be null or empty.");
+        }
+    }
+
 }
