@@ -28,7 +28,9 @@ public class TrainObserverApplicationService {
 
     public void unregisterObserver(String nickname) {
         checkNickname(nickname);
-        //TODO
+
+        TrainObserver observer = observerRepository.ofNickname(nickname);
+        observerRepository.removeObserver(observer);
     }
 
     private void checkNickname(String nickname) {
@@ -42,4 +44,10 @@ public class TrainObserverApplicationService {
         return observers;
     }
 
+    public void observeTrain(String nickname, String train) {
+        checkNickname(nickname);
+
+        TrainObserver observer = observerRepository.ofNickname(nickname);
+
+    }
 }

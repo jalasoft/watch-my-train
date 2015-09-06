@@ -28,7 +28,7 @@ public class ObserverEndpoint {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<TrainObserverResource> registerObserver(@RequestBody TrainObserverResource resource)  {
-        checkTrainObserver(resource);
+        checkTrainObserverResource(resource);
 
         String nickname = resource.getNickname();
 
@@ -66,6 +66,22 @@ public class ObserverEndpoint {
         return new ResponseEntity<>(resources, HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(value = "/{nickname}", method = RequestMethod.PUT)
+    public void observeTrain(@PathVariable String nickname, TrainResource train) {
+        checkNickname(nickname);
+        checkTrainResource(train);
+
+        //TODO
+    }
+
+    @RequestMapping(value = "/{nickname}/{trainNumber}", method = RequestMethod.DELETE)
+    public void notObserveTrain(@PathVariable String nickname, @PathVariable String trainNumber) {
+        checkNickname(nickname);
+        checkTrainNumber(trainNumber);
+
+        //TODO
+    }
+
     @RequestMapping(value= "/{nickname}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> unregisterObserver(@PathVariable String nickname) {
         checkNickname(nickname);
@@ -75,7 +91,7 @@ public class ObserverEndpoint {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    private void checkTrainObserver(TrainObserverResource observer) {
+    private void checkTrainObserverResource(TrainObserverResource observer) {
         if (observer == null) {
             throw new InvalidTrainObserverResource("Observer of trains must not be null.");
         }
@@ -88,4 +104,19 @@ public class ObserverEndpoint {
         }
     }
 
+    private void checkTrainResource(TrainResource train) {
+        if (train == null) {
+            throw new InvalidTrainResource("Train resource must not be null.");
+        }
+
+        if (train.isEmpty()) {
+            throw new InvalidTrainResource("Train resource must not be empty.");
+        }
+    }
+
+    private void checkTrainNumber(String trainNumber) {
+        if (trainNumber == null || trainNumber.isEmpty()) {
+            throw new InvalidTrainResource("Train number must not be null or empty.");
+        }
+    }
 }
