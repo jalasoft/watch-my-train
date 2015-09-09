@@ -1,7 +1,10 @@
-package cz.jalasoft.trainwatch.resources;
+package cz.jalasoft.trainwatch.resources.observer;
 
 import cz.jalasoft.trainwatch.application.TrainObserverApplicationService;
 import cz.jalasoft.trainwatch.domain.model.observer.TrainObserver;
+import cz.jalasoft.trainwatch.resources.InvalidTrainObserverResource;
+import cz.jalasoft.trainwatch.resources.InvalidTrainResource;
+import cz.jalasoft.trainwatch.resources.train.TrainResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +22,9 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping(path = "/observer")
-public class ObserverEndpoint {
+public class TrainObserverEndpoint {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ObserverEndpoint.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrainObserverEndpoint.class);
 
     @Autowired
     private TrainObserverApplicationService observerService;
@@ -36,7 +39,7 @@ public class ObserverEndpoint {
 
         TrainObserver newObserver = observerService.registerObserver(nickname);
 
-        TrainObserverResource newResource = new ObserverAssembler(newObserver)
+        TrainObserverResource newResource = new TrainObserverResourceAssembler(newObserver)
                 .withSelfLink()
                 .withRegisteredObserversLink()
                 .withUnregisterObserverLink()
@@ -59,7 +62,7 @@ public class ObserverEndpoint {
 
         Collection<TrainObserverResource> resources =
                 observers.stream().map(observer ->
-                        new ObserverAssembler(observer).withSelfLink().resource()
+                        new TrainObserverResourceAssembler(observer).withSelfLink().resource()
                                     )
                                     .collect(Collectors.toCollection(ArrayList::new));
 

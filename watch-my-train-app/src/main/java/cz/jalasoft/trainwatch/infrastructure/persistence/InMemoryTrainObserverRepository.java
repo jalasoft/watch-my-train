@@ -38,7 +38,7 @@ public class InMemoryTrainObserverRepository implements TrainObserverRepository 
     }
 
     @Override
-    public TrainObserver ofNickname(String nickname) {
+    public TrainObserver observerOfNickname(String nickname) {
 
         TrainObserver observer = observers.get(nickname);
 

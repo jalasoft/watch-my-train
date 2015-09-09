@@ -1,4 +1,6 @@
-package cz.jalasoft.trainwatch.resources;
+package cz.jalasoft.trainwatch.resources.train;
+
+import org.springframework.hateoas.ResourceSupport;
 
 import java.util.Optional;
 
@@ -6,7 +8,7 @@ import java.util.Optional;
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 9/6/15.
  */
-public class TrainResource {
+public class TrainResource extends ResourceSupport {
 
     private String number;
     private String name;

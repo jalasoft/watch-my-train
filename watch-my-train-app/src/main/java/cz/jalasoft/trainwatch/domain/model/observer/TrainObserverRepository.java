@@ -12,7 +12,7 @@ public interface TrainObserverRepository {
 
     void removeObserver(TrainObserver observer);
 
-    TrainObserver ofNickname(String nickname);
+    TrainObserver observerOfNickname(String nickname);
 
     Collection<TrainObserver> allObservers();
 }

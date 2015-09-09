@@ -1,4 +1,4 @@
-package cz.jalasoft.trainwatch.resources;
+package cz.jalasoft.trainwatch.resources.observer;
 
 import cz.jalasoft.trainwatch.domain.model.observer.TrainObserver;
 import org.springframework.hateoas.Link;
@@ -11,12 +11,12 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 9/6/15.
  */
-final class ObserverAssembler {
+final class TrainObserverResourceAssembler {
 
     private final TrainObserver observer;
     private final TrainObserverResource resource;
 
-    ObserverAssembler(TrainObserver observer) {
+    TrainObserverResourceAssembler(TrainObserver observer) {
         this.observer = observer;
         this.resource = new TrainObserverResource();
     }
@@ -26,34 +26,34 @@ final class ObserverAssembler {
         return resource;
     }
 
-    ObserverAssembler withSelfLink() {
+    TrainObserverResourceAssembler withSelfLink() {
         resource.add(selfLink());
         return this;
     }
 
     private Link selfLink() {
-        ControllerLinkBuilder selfLinkBuilder = linkTo(ObserverEndpoint.class).slash(observer.nickname());
+        ControllerLinkBuilder selfLinkBuilder = linkTo(TrainObserverEndpoint.class).slash(observer.nickname());
         return selfLinkBuilder.withSelfRel();
     }
 
 
-    ObserverAssembler withRegisteredObserversLink() {
+    TrainObserverResourceAssembler withRegisteredObserversLink() {
        resource.add(registeredObserversLink());
         return this;
     }
 
     private Link registeredObserversLink() {
-        Link allLink = linkTo(methodOn(ObserverEndpoint.class).registeredObservers()).withRel("registered observers");
+        Link allLink = linkTo(methodOn(TrainObserverEndpoint.class).registeredObservers()).withRel("registered observers");
         return allLink;
     }
 
-    ObserverAssembler withUnregisterObserverLink() {
+    TrainObserverResourceAssembler withUnregisterObserverLink() {
         resource.add(unregisterObserverLink());
         return this;
     }
 
     private Link unregisterObserverLink() {
-        Link unregisterLink = linkTo(methodOn(ObserverEndpoint.class).unregisterObserver(observer.nickname())).withRel("unregister");
+        Link unregisterLink = linkTo(methodOn(TrainObserverEndpoint.class).unregisterObserver(observer.nickname())).withRel("unregister");
         return unregisterLink;
     }
 }

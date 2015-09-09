@@ -1,5 +1,6 @@
 package cz.jalasoft.trainwatch.domain.model.observer;
 
+import cz.jalasoft.trainwatch.domain.model.train.Train;
 import cz.jalasoft.trainwatch.domain.model.train.TrainName;
 
 /**

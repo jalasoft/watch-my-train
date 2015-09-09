@@ -1,4 +1,4 @@
-package cz.jalasoft.trainwatch.resources;
+package cz.jalasoft.trainwatch.resources.observer;
 
 import org.springframework.hateoas.ResourceSupport;
 
