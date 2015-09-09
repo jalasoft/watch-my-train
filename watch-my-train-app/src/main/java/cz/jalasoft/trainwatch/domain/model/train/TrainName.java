@@ -6,18 +6,18 @@ import java.util.Optional;
  * @author Honza Lastovicka
  * @since 13.8.15
  */
-public final class TrainId {
+public final class TrainName {
 
     private String number;
     private String name;
 
-    public TrainId(String number, String name) {
+    public TrainName(String number, String name) {
         setNumber(number);
         setName(name);
     }
 
-    public TrainId(TrainId id) {
-        this(id.number(), id.name().orElse(null));
+    public TrainName(TrainName name) {
+        this(name.number(), name.name().orElse(null));
     }
 
     private void setNumber(String number) {
@@ -52,11 +52,11 @@ public final class TrainId {
             return true;
         }
 
-        if (!(obj instanceof TrainId)) {
+        if (!(obj instanceof TrainName)) {
             return false;
         }
 
-        TrainId that = (TrainId) obj;
+        TrainName that = (TrainName) obj;
 
         return this.number().equals(that.number());
     }
@@ -70,7 +70,7 @@ public final class TrainId {
 
     @Override
     public String toString() {
-        StringBuilder bldr = new StringBuilder("TrainId[")
+        StringBuilder bldr = new StringBuilder("TrainName[")
                 .append(number);
 
         name().ifPresent(n -> bldr.append(", " + n));

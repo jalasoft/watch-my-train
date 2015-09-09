@@ -47,7 +47,5 @@ public class TrainObserverApplicationService {
     public void observeTrain(String nickname, String train) {
         checkNickname(nickname);
 
-        TrainObserver observer = observerRepository.ofNickname(nickname);
-
     }
 }

@@ -71,7 +71,7 @@ public class ObserverEndpoint {
         checkNickname(nickname);
         checkTrainResource(train);
 
-        //TODO
+        observerService.observeTrain(nickname, train.getFullName());
     }
 
     @RequestMapping(value = "/{nickname}/{trainNumber}", method = RequestMethod.DELETE)

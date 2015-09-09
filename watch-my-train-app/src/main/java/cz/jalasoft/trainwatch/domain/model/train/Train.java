@@ -6,21 +6,17 @@ package cz.jalasoft.trainwatch.domain.model.train;
  */
 public class Train {
 
-    private TrainId id;
+    private TrainName name;
 
-    public Train(TrainId id) {
-        this.id = id;
+    public Train(TrainName name) {
+        this.name = name;
     }
 
-    public TrainId id() {
-        return id;
+    public TrainName name() {
+        return name;
     }
 
     public String fullName() {
-        return id.fullName();
-    }
-
-    public Schedule schedule() {
-        return null;
+        return name.fullName();
     }
 }

@@ -1,6 +1,6 @@
 package cz.jalasoft.trainwatch.domain.model.observer;
 
-import cz.jalasoft.trainwatch.domain.model.train.TrainId;
+import cz.jalasoft.trainwatch.domain.model.train.TrainName;
 
 import java.util.Collection;
 import java.util.function.Consumer;
@@ -15,20 +15,20 @@ public class WatchList {
         return new WatchList();
     }
 
-    private Collection<TrainId> watchedTrains;
+    private Collection<TrainName> watchedTrains;
 
-    private Collection<TrainId> trainsToWatch;
-    private Collection<TrainId> trainsStopToWatch;
+    private Collection<TrainName> trainsToWatch;
+    private Collection<TrainName> trainsStopToWatch;
 
-    public void watchTrain(TrainId trainId) {
+    public void watchTrain(TrainName trainId) {
         trainsToWatch.contains(trainId);
     }
 
-    public void stopWatchingTrain(TrainId trainId) {
+    public void stopWatchingTrain(TrainName trainId) {
         trainsStopToWatch.add(trainId);
     }
 
-    public void forEachTrain(Consumer<TrainId> consumer) {
+    public void forEachTrain(Consumer<TrainName> consumer) {
         //TODO
     }
 }

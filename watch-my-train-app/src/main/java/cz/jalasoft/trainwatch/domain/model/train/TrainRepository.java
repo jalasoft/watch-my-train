@@ -6,11 +6,5 @@ package cz.jalasoft.trainwatch.domain.model.train;
  */
 public interface TrainRepository {
 
-    void addTrain(Train train);
-
-    void removeTrain(Train train);
-
-    boolean isTrainTracked(TrainId trainId);
-
-    Train getTrainById(TrainId trainId);
+    TrainName lookupTrain(String trainNameOrNumber);
 }

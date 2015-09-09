@@ -8,27 +8,35 @@ import java.util.Optional;
  */
 public class TrainResource {
 
-    private Optional<String> maybeNumber;
-    private Optional<String> maybeName;
+    private String number;
+    private String name;
 
     public String getNumber() {
-        return maybeNumber.orElse("");
+        return number;
     }
 
     public void setNumber(String number) {
-        this.maybeNumber = Optional.ofNullable(number);
+        this.number = number;
     }
 
-    public String getMaybeName() {
-        return maybeName.orElse("");
+    public String getName() {
+        return name;
     }
 
-    public void setMaybeName(String name) {
-        this.maybeName = Optional.ofNullable(name);
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String nameOrEmpty() {
+        return name != null ? name : "";
+    }
+
+    private String numberOrEmpty() {
+        return number != null ? number : "";
     }
 
     public String getFullName() {
-        return (maybeNumber.orElse("") + " " + maybeName.orElse("")).trim();
+        return (nameOrEmpty() + " " + numberOrEmpty()).trim();
     }
 
     public boolean isEmpty() {

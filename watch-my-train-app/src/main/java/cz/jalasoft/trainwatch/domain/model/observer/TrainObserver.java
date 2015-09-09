@@ -1,6 +1,6 @@
 package cz.jalasoft.trainwatch.domain.model.observer;
 
-import cz.jalasoft.trainwatch.domain.model.train.TrainId;
+import cz.jalasoft.trainwatch.domain.model.train.TrainName;
 
 /**
  * @author Honza Lastovicka
@@ -33,11 +33,11 @@ public class TrainObserver {
         return nickname;
     }
 
-    public void startObserving(TrainId train) {
+    public void startObserving(TrainName train) {
 
     }
 
-    public void stopObserving(TrainId train) {
+    public void stopObserving(TrainName train) {
 
     }
 }
