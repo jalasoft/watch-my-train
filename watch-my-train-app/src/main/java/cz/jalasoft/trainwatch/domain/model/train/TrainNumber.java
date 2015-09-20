@@ -3,20 +3,26 @@ package cz.jalasoft.trainwatch.domain.model.train;
 import java.util.Optional;
 
 /**
+ * A unique identification of a train.
+ *
  * @author Honza Lastovicka
  * @since 13.8.15
  */
-public final class TrainName {
+public final class TrainNumber {
 
     private String number;
     private String name;
 
-    public TrainName(String number, String name) {
+    public TrainNumber(String number) {
+        setNumber(number);
+    }
+
+    public TrainNumber(String number, String name) {
         setNumber(number);
         setName(name);
     }
 
-    public TrainName(TrainName name) {
+    public TrainNumber(TrainNumber name) {
         this(name.number(), name.name().orElse(null));
     }
 
@@ -28,7 +34,10 @@ public final class TrainName {
     }
 
     private void setName(String name) {
-        if (name.isEmpty()) {
+        if (name == null) {
+            return;
+        }
+        if (name.trim().isEmpty()) {
             throw new IllegalArgumentException("Name might be null but not be empty.");
         }
         this.name = name;
@@ -52,11 +61,11 @@ public final class TrainName {
             return true;
         }
 
-        if (!(obj instanceof TrainName)) {
+        if (!(obj instanceof TrainNumber)) {
             return false;
         }
 
-        TrainName that = (TrainName) obj;
+        TrainNumber that = (TrainNumber) obj;
 
         return this.number().equals(that.number());
     }
@@ -70,7 +79,7 @@ public final class TrainName {
 
     @Override
     public String toString() {
-        StringBuilder bldr = new StringBuilder("TrainName[")
+        StringBuilder bldr = new StringBuilder("TrainNumber[")
                 .append(number);
 
         name().ifPresent(n -> bldr.append(", " + n));

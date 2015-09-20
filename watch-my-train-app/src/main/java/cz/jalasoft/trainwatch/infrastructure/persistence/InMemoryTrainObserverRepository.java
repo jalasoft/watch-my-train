@@ -1,6 +1,8 @@
 package cz.jalasoft.trainwatch.infrastructure.persistence;
 
+import cz.jalasoft.trainwatch.domain.model.observer.Nickname;
 import cz.jalasoft.trainwatch.domain.model.observer.TrainObserver;
+import cz.jalasoft.trainwatch.domain.model.observer.TrainObserverNotFound;
 import cz.jalasoft.trainwatch.domain.model.observer.TrainObserverRepository;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +18,7 @@ import java.util.Map;
 @Component("inMemoryTrainObserversRepository")
 public class InMemoryTrainObserverRepository implements TrainObserverRepository {
 
-    private final Map<String, TrainObserver> observers;
+    private final Map<Nickname, TrainObserver> observers;
 
     public InMemoryTrainObserverRepository() {
         observers = new HashMap<>();
@@ -38,12 +40,11 @@ public class InMemoryTrainObserverRepository implements TrainObserverRepository 
     }
 
     @Override
-    public TrainObserver observerOfNickname(String nickname) {
-
+    public TrainObserver observerOfNickname(Nickname nickname) throws TrainObserverNotFound {
         TrainObserver observer = observers.get(nickname);
 
         if (observer == null) {
-            throw new IllegalArgumentException("Unexpected nickiname " + nickname);
+            throw new TrainObserverNotFound(nickname);
         }
         return observer;
     }

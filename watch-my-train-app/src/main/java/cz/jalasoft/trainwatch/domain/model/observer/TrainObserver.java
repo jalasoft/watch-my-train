@@ -1,7 +1,8 @@
 package cz.jalasoft.trainwatch.domain.model.observer;
 
-import cz.jalasoft.trainwatch.domain.model.train.Train;
-import cz.jalasoft.trainwatch.domain.model.train.TrainName;
+import cz.jalasoft.trainwatch.domain.model.train.TrainNumber;
+
+import java.util.Collection;
 
 /**
  * @author Honza Lastovicka
@@ -9,13 +10,15 @@ import cz.jalasoft.trainwatch.domain.model.train.TrainName;
  */
 public class TrainObserver {
 
-    private String nickname;
+    private Nickname nickname;
+    private WatchList watchList;
 
-    public TrainObserver(String nickname) {
+    public TrainObserver(Nickname nickname, WatchList watchList) {
         setNickname(nickname);
+        setWatchList(watchList);
     }
 
-    private void setNickname(String nickname) {
+    private void setNickname(Nickname nickname) {
         if (this.nickname != null) {
             throw new IllegalStateException("Nickname cannot be reinitialized.");
         }
@@ -24,21 +27,29 @@ public class TrainObserver {
             throw new IllegalArgumentException("Nickname must not be null");
         }
 
-        if (nickname.isEmpty()) {
-            throw new IllegalArgumentException("Nickname must not be empty");
-        }
         this.nickname = nickname;
     }
 
-    public String nickname() {
+    private void setWatchList(WatchList watchList) {
+        if (watchList == null) {
+            throw new IllegalArgumentException("Watch list must not be null.");
+        }
+        this.watchList = watchList;
+    }
+
+    public Nickname nickname() {
         return nickname;
     }
 
-    public void startObserving(TrainName train) {
-
+    public void watchTrain(TrainNumber trainNumber) {
+        watchList.watchTrain(trainNumber);
     }
 
-    public void stopObserving(TrainName train) {
+    public void notWatchTrain(TrainNumber trainNumber) {
+        watchList.notWatchTrain(trainNumber);
+    }
 
+    public Collection<TrainNumber> watchedTrains() {
+        return watchList.all();
     }
 }

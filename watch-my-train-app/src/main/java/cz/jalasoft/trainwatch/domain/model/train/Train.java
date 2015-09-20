@@ -6,17 +6,26 @@ package cz.jalasoft.trainwatch.domain.model.train;
  */
 public class Train {
 
-    private TrainName name;
+    private TrainNumber number;
+    private TrainOnlineInfoService trainInfoService;
 
-    public Train(TrainName name) {
-        this.name = name;
+    Train(TrainNumber number, TrainOnlineInfoService trainInfoService) {
+       setNumber(number);
+       this.trainInfoService = trainInfoService;
     }
 
-    public TrainName name() {
-        return name;
+    private void setNumber(TrainNumber number) {
+        if (number == null) {
+            throw new IllegalArgumentException("Train number must not be null.");
+        }
+        this.number = number;
+    }
+
+    public TrainNumber number() {
+        return number;
     }
 
     public String fullName() {
-        return name.fullName();
+        return number.fullName();
     }
 }

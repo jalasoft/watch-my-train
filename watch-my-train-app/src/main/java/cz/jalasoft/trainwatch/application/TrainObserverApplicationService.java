@@ -1,8 +1,9 @@
 package cz.jalasoft.trainwatch.application;
 
-import cz.jalasoft.trainwatch.domain.model.observer.TrainObserver;
-import cz.jalasoft.trainwatch.domain.model.observer.TrainObserverRepository;
-import cz.jalasoft.trainwatch.domain.model.train.TrainName;
+import cz.jalasoft.trainwatch.domain.model.observer.*;
+import cz.jalasoft.trainwatch.domain.model.train.Train;
+import cz.jalasoft.trainwatch.domain.model.train.TrainNotFound;
+import cz.jalasoft.trainwatch.domain.model.train.TrainNumber;
 import cz.jalasoft.trainwatch.domain.model.train.TrainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 
 /**
+ * An application service that serves as a collection of uses cases.
+ *
  * @author Honza Lastovicka (lastovicka@avast.com)
  * @since 8/29/15.
  */
@@ -23,24 +26,22 @@ public class TrainObserverApplicationService {
     private TrainRepository trainRepository;
 
     public TrainObserver registerObserver(String nickname) {
-        checkNickname(nickname);
 
-        TrainObserver observer = new TrainObserver(nickname);
+        TrainObserver observer = new TrainObserver(new Nickname(nickname), new WatchList());
         observerRepository.addObserver(observer);
 
         return observer;
     }
 
-    public void unregisterObserver(String nickname) {
-        checkNickname(nickname);
+    public void unregisterObserver(String nickname) throws TrainObserverNotFound {
 
-        TrainObserver observer = observerRepository.observerOfNickname(nickname);
+        TrainObserver observer = observerRepository.observerOfNickname(new Nickname(nickname));
         observerRepository.removeObserver(observer);
     }
 
-    private void checkNickname(String nickname) {
-        if (nickname == null || nickname.isEmpty()) {
-            throw new IllegalArgumentException("Nickname of an observer must not be null or empty.");
+    private void checkTrainNumber(String trainNumber) {
+        if (trainNumber == null || trainNumber.isEmpty()) {
+            throw new IllegalArgumentException("Train number must not be null or empty.");
         }
     }
 
@@ -49,27 +50,25 @@ public class TrainObserverApplicationService {
         return observers;
     }
 
-    public void observeTrain(String nickname, String trainNumber) {
-        checkNickname(nickname);
+    public void observeTrain(String nickname, String trainNumber) throws TrainObserverNotFound, TrainNotFound {
+        checkTrainNumber(trainNumber);
 
-        TrainObserver observer = observerRepository.observerOfNickname(nickname);
-        TrainName train = null; //TODO
+        Train train = trainRepository.trainOfNumber(trainNumber);
+        TrainObserver observer = observerRepository.observerOfNickname(new Nickname(nickname));
 
-        observer.startObserving(train);
+        observer.watchTrain(train.number());
     }
 
-    public void notObserveTrain(String nickname, String trainNumber) {
-        checkNickname(nickname);
+    public void notObserveTrain(String nickname, String trainNumber) throws TrainObserverNotFound, TrainNotFound {
+        checkTrainNumber(trainNumber);
 
-        TrainObserver observer = observerRepository.observerOfNickname(nickname);
-        trainRepository.lookupTrain(trainNumber);
+        TrainObserver observer = observerRepository.observerOfNickname(new Nickname(nickname));
+        Train train = trainRepository.trainOfNumber(trainNumber);
 
-        TrainName train = null; //TODO
-
-        observer.stopObserving(train);
+        observer.notWatchTrain(train.number());
     }
 
-    public Collection<TrainName> lookupTrain(String numberOrName) {
+    public Collection<TrainNumber> lookupTrain(String numberOrName) {
         return trainRepository.lookupTrain(numberOrName);
     }
 }

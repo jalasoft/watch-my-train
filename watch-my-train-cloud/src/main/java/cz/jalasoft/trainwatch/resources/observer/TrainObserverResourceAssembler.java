@@ -22,7 +22,7 @@ final class TrainObserverResourceAssembler {
     }
 
     TrainObserverResource resource() {
-        resource.setNickname(observer.nickname());
+        resource.setNickname(observer.nickname().value());
         return resource;
     }
 
@@ -53,7 +53,7 @@ final class TrainObserverResourceAssembler {
     }
 
     private Link unregisterObserverLink() {
-        Link unregisterLink = linkTo(methodOn(TrainObserverEndpoint.class).unregisterObserver(observer.nickname())).withRel("unregister");
+        Link unregisterLink = linkTo(methodOn(TrainObserverEndpoint.class).unregisterObserver(observer.nickname().value())).withRel("unregister");
         return unregisterLink;
     }
 }

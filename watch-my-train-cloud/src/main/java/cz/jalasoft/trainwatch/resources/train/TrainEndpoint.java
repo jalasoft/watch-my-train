@@ -1,7 +1,7 @@
 package cz.jalasoft.trainwatch.resources.train;
 
 import cz.jalasoft.trainwatch.application.TrainObserverApplicationService;
-import cz.jalasoft.trainwatch.domain.model.train.TrainName;
+import cz.jalasoft.trainwatch.domain.model.train.TrainNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +23,7 @@ public class TrainEndpoint {
 
     @RequestMapping(path = "/{numberOrName}", method = RequestMethod.POST)
     public Collection<TrainResource> lookupTrains(@PathVariable String numberOrName) {
-        Collection<TrainName> trains = observerService.lookupTrain(numberOrName);
+        Collection<TrainNumber> trains = observerService.lookupTrain(numberOrName);
 
         return trains.stream()
                 .map(

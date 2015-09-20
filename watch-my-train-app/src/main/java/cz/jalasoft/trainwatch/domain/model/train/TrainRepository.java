@@ -1,15 +1,32 @@
 package cz.jalasoft.trainwatch.domain.model.train;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.Collection;
 
 /**
  * @author Honza Lastovicka
  * @since 17.8.15
  */
-public interface TrainRepository {
+@Component
+public class TrainRepository {
 
-    Collection<TrainName> lookupTrain(String trainNameOrNumber);
+    @Autowired
+    private TrainOnlineInfoService trainInfoService;
 
-    Train trainOfName(TrainName name);
+    public Collection<TrainNumber> lookupTrain(String trainNameOrNumber) {
+        return trainInfoService.lookupTrain(trainNameOrNumber);
+    }
 
+    public Train trainOfNumber(String number) throws TrainNotFound {
+        Collection<TrainNumber> trains = lookupTrain(number);
+
+        if (trains.size() != 1) {
+            throw new TrainNotFound(number);
+        }
+        TrainNumber trainNumber = trains.stream().findFirst().get();
+
+        return new Train(trainNumber, trainInfoService);
+    }
 }

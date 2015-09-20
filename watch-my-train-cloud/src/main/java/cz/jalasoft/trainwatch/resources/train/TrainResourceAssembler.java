@@ -1,6 +1,6 @@
 package cz.jalasoft.trainwatch.resources.train;
 
-import cz.jalasoft.trainwatch.domain.model.train.TrainName;
+import cz.jalasoft.trainwatch.domain.model.train.TrainNumber;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 
@@ -12,10 +12,10 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
  */
 final class TrainResourceAssembler {
 
-    private final TrainName trainName;
+    private final TrainNumber trainName;
     private final TrainResource resource;
 
-    TrainResourceAssembler(TrainName trainName) {
+    TrainResourceAssembler(TrainNumber trainName) {
         this.trainName = trainName;
         this.resource = new TrainResource();
     }

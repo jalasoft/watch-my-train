@@ -2,6 +2,8 @@ package cz.jalasoft.trainwatch.resources.observer;
 
 import cz.jalasoft.trainwatch.application.TrainObserverApplicationService;
 import cz.jalasoft.trainwatch.domain.model.observer.TrainObserver;
+import cz.jalasoft.trainwatch.domain.model.observer.TrainObserverNotFound;
+import cz.jalasoft.trainwatch.domain.model.train.TrainNotFound;
 import cz.jalasoft.trainwatch.resources.InvalidTrainObserverResource;
 import cz.jalasoft.trainwatch.resources.InvalidTrainResource;
 import cz.jalasoft.trainwatch.resources.train.TrainResource;
@@ -70,27 +72,40 @@ public class TrainObserverEndpoint {
     }
 
     @RequestMapping(value = "/{nickname}", method = RequestMethod.PUT)
-    public void observeTrain(@PathVariable String nickname, TrainResource train) {
+    public ResponseEntity<String> observeTrain(@PathVariable String nickname, TrainResource trainResource) {
         checkNickname(nickname);
-        checkTrainResource(train);
+        checkTrainResource(trainResource);
 
-        observerService.observeTrain(nickname, train.getFullName());
+        try {
+            observerService.observeTrain(nickname, trainResource.getNumber());
+        } catch (TrainObserverNotFound | TrainNotFound exc) {
+            return new ResponseEntity<>(exc.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{nickname}/{trainNumber}", method = RequestMethod.DELETE)
-    public void notObserveTrain(@PathVariable String nickname, @PathVariable String trainNumber) {
+    @RequestMapping(value = "/{nickname}/train/{trainNumber}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> notObserveTrain(@PathVariable String nickname, @PathVariable String trainNumber) {
         checkNickname(nickname);
         checkTrainNumber(trainNumber);
 
-        //TODO
+        try {
+            observerService.notObserveTrain(nickname, trainNumber);
+        } catch (TrainObserverNotFound | TrainNotFound exc) {
+            return new ResponseEntity<>(exc.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value= "/{nickname}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> unregisterObserver(@PathVariable String nickname) {
         checkNickname(nickname);
 
-        observerService.unregisterObserver(nickname);
-
+        try {
+            observerService.unregisterObserver(nickname);
+        } catch (TrainObserverNotFound exc) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
@@ -103,7 +118,7 @@ public class TrainObserverEndpoint {
 
     private void checkNickname(String nickname) {
         if (nickname == null || nickname.isEmpty()) {
-            throw new InvalidTrainObserverResource("Nick name of an observer must not be null or empty.");
+            throw new InvalidTrainObserverResource("Nick number of an observer must not be null or empty.");
         }
     }
 

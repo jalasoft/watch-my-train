@@ -1,7 +1,9 @@
 package cz.jalasoft.watchmytrain;
 
+import cz.jalasoft.trainwatch.domain.model.observer.Nickname;
 import cz.jalasoft.trainwatch.domain.model.observer.TrainObserver;
 import cz.jalasoft.trainwatch.domain.model.observer.TrainObserverRepository;
+import cz.jalasoft.trainwatch.domain.model.observer.WatchList;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -19,7 +21,7 @@ public class ObserverRepositoryTest {
    // @Test(groups = { "watcher" })
     public void newWatcherIsNotNull() {
 
-        TrainObserver observer = new TrainObserver("Pepa");
+        TrainObserver observer = new TrainObserver(new Nickname("Pepa"), new WatchList());
         repository.addObserver(observer);
         Collection<TrainObserver> observers = repository.allObservers();
 
